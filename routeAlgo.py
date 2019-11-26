@@ -1,3 +1,6 @@
+# this script is still being worked on and only works for journeys from bakerloo stations to other lines
+
+
 def routeAlgrthm(source_train, dest_train):
 	# making a number system, where an station is 1 point, and algorithm favours the trip that requires less points...
 	# chop of known paths ways, these include no connection routes...
