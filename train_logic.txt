@@ -1,0 +1,67 @@
+fMAIN OBJECTIVE: USE POINTS AS REFERENCE OF STATIONS...
+Use example = 'Dollis Hill - Paddington'
+# ----------------------------------------------------------------------------
+-->Bakerloo <Paddington - Ham City, Circle
+	Baker Street -Met, Jubilee, Ham City, Circle
+	Oxford Circus - Victoria, Central
+	Picaddily Cicus - Picaddily
+	Charing Cross - Nothern
+	Embankment - District, Circle, Nothern
+	Waterloo - Jubilee, Nothern
+	Elephant and Castle - Northern
+
+NO CONNECTIONS FROM
+	{index ref: bakerloo_train }
+	Harrow & Weadstone[23] -- Paddington[11](Approach)... (So any dest_train, need to focus in getting 
+						   Paddington...)
+CODE EXAMPLE:					
+if onbakerloo:	
+	if source_train.index() > 11:
+		# Destination Proirity is Paddington...
+else:
+	otherfunction()
+
+
+# -------------------------------------------------------------------------
+
+-->Central  <Notting Hill Gate - Circle, District
+	Bond Street - Jubilee
+	Oxford Circus - Bakerloo, Victoria
+	Tottenham Court Road - Northern
+	Holborn - Picadilly
+	Bank - Northern, Circle, District
+	Liverpool Street - Hamm, Circle, Met
+	Mile End - Hamm, District
+	Stratford -  A munch of random...
+	
+NO CONNECTIONS FROM
+	Stratford(Approach)[28] -- Epping[-1]...
+	West Ruislip -- Hanger Lane(Approach)...
+ALTERNATIVE ROUTES
+	Notting Hill Gate - Ealing Broadway
+# ---------------------------------------------------------------------------
+-->
+	
+	#print(onbakerloo)
+	#print(oncentral)
+	#print(oncircle)
+	#print(ondistrict)
+	#print(onhamcity)
+	#print(onjubilee)
+	#print(onmet)
+	#print(onnothern)
+	#print(onpicca)
+	#print(onvict)
+	#print(onwaterloo)
+
+	#print(gobakerloo)
+	#print(gocentral)
+	#print(gocircle)
+	#print(godistrict)
+	#print(gohamcity)
+	#print(gojubilee)
+	#print(gomet)
+	#print(gonothern)
+	#print(gopicca)
+	#print(govict)
+	#print(gowaterloo)
