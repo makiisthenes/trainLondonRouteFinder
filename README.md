@@ -21,5 +21,5 @@ Currently [5/06/2020], the script is updated to support directions to and from:<
 </ul>
 Michael Peres
 <p align='center'>
-<img src='https://raw.githubusercontent.com/makiisthenes/trainLondonRouteFinder/master/tfl_logo.jpg' width=40%>
+<img src='https://raw.githubusercontent.com/makiisthenes/trainLondonRouteFinder/master/tfl_algo.png' width=40%>
 </p>
