@@ -94,9 +94,7 @@ trainlines = {
     'DLR': [],
 
     'London Overground': []}
-
 line_types = {'direct': ['Bakerloo', 'Victoria', 'Circle', 'Hammersmith & City', 'Jubilee', 'Waterloo & City'], 'divergent': ['Central', 'District', 'Metropolitan', 'Nothern', 'Piccadilly', 'DLR']}
-
 
 
 # dictionary = {'station':['lines1', 'lines2]}
@@ -128,8 +126,9 @@ def update_connections():
                                     connection_dic[trainlines[linesx][x]].append(linesx)
                                 if linesy not in connection_dic[trainlines[linesx][x]]:
                                     connection_dic[trainlines[linesx][x]].append(linesy)
-    print(connection_dic)
-update_connections()
+    # print(connection_dic)
+    return connection_dic
+connection_dic = update_connections()
 print('Updated TfL Train Map Connections. Maki Inc.')
 
 
@@ -162,7 +161,9 @@ def search(station):
 
 
 def linefinder(s_train, d_train):
+    query_list = []
     common_line = []
+    station_of_interest = {}
     s_line, d_line = ([], [])
     for lines in trainlines:
         for x in range(len(trainlines[lines])):
@@ -180,16 +181,38 @@ def linefinder(s_train, d_train):
         if line in s_line:
             if line not in common_line:
                 common_line.append(line)
-    if len(common_line) < 1:
-        print("No lines in common found.")
-    else:
-        print(f"Lines found in common include: {common_line}")
-
+    for line_x in s_line:
+        for line_y in  d_line:
+            query_list.append([line_x, line_y])
+    for query_pair in query_list:
+        # print(query_pair)
+        for stations in connection_dic:
+            temp = []
+            for lines in connection_dic[stations]:
+                temp.append(lines)
+            verify = 0
+            for y in query_pair:
+                if y in temp:
+                    verify+=1
+            if verify == len(query_pair):
+                if stations not in station_of_interest:
+                    station_of_interest[stations] = query_pair
+    print(f"Stations of Interest: {station_of_interest}")
+    print("Directions ----------------------------*")
+    for x in station_of_interest:
+        # s_train --[query_pair1]--> Waterloo --[query_pair2]-->d_train
+        intermediate_station = x
+        query_pair = station_of_interest[x]
+        print(f"{s_train} --[{query_pair[0]}]--> {intermediate_station} --[{query_pair[1]}]--> {d_train}")
+    if len(common_line) > 0:
+        print("Best Option ----------------------------*")
+        # print(f"Lines found in common include: {common_line}")
+        print(f"{s_train} --[{common_line}]--> {d_train}")
 
 while input != 'Exit':
     search.confirmed = False
     found = False
-    print('Enter exit in any way to exit program...')
+    # print('Enter exit in any way to exit program...')
     while not search.confirmed:
         source_train = input('Search START train station:: ').title().strip()
         search(source_train)
@@ -204,7 +227,7 @@ while input != 'Exit':
         if not found and search.confirmed:
             dest_train = input('Enter END train station:: ').title().strip()
     os.system('cls')
-    print(f'Finding directions from {source_train} --> {dest_train}...')
+    print(f'Finding directions from {source_train} --> {dest_train}.')
     linefinder(source_train, dest_train)
     sleep(1)
 
