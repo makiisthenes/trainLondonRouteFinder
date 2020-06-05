@@ -129,10 +129,8 @@ def update_connections():
                                 if linesy not in connection_dic[trainlines[linesx][x]]:
                                     connection_dic[trainlines[linesx][x]].append(linesy)
     print(connection_dic)
-
-
 update_connections()
-exit(0)
+print('Updated TfL Train Map Connections. Maki Inc.')
 
 
 def search(station):
@@ -151,6 +149,7 @@ def search(station):
                         selected_stations.append(trainlines[lines][x])
     if len(selected_stations) > 1:
         print('Did you mean anyone of these?? ')
+        print("Please copy and paste one of these station(s) into Enter input!")
         for x in selected_stations:
             print(f'--> {x}')
         search.confirmed = True
@@ -194,16 +193,16 @@ while input != 'Exit':
     while not search.confirmed:
         source_train = input('Search START train station:: ').title().strip()
         search(source_train)
-    if not found:
-        source_train = input('Enter START train station:: ').title().strip()
+        if not found and search.confirmed:
+            source_train = input('Enter START train station:: ').title().strip()
     os.system('cls')
     found = False
     search.confirmed = False
     while not search.confirmed:
         dest_train = input('Search END train station:: ').title().strip()
         search(dest_train)
-    if not found:
-        dest_train = input('Enter END train station:: ').title().strip()
+        if not found and search.confirmed:
+            dest_train = input('Enter END train station:: ').title().strip()
     os.system('cls')
     print(f'Finding directions from {source_train} --> {dest_train}...')
     linefinder(source_train, dest_train)
