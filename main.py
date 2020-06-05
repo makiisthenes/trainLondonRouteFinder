@@ -89,50 +89,122 @@ trainlines = {
                  'Highbury & Islington', "King's Cross St. Pancras", 'Euston', 'Warren Street', 'Oxford Circus',
                  'Green Park', 'Victoria', 'Pimlico', 'Vauxhall', 'Stockwell', 'Brixton'],
 
-    'Waterloo & City': [],
+    'Waterloo & City': ['Waterloo', 'Bank'],
 
     'DLR': [],
 
     'London Overground': []}
 
+line_types = {'direct': ['Bakerloo', 'Victoria', 'Circle', 'Hammersmith & City', 'Jubilee', 'Waterloo & City'], 'divergent': ['Central', 'District', 'Metropolitan', 'Nothern', 'Piccadilly', 'DLR']}
+
+
+
+# dictionary = {'station':['lines1', 'lines2]}
+def update_connections():
+    unique_stations = []
+    connection_dic = {}
+    for lines in trainlines:
+        for stations in range(len(trainlines[lines])):
+            if trainlines[lines][stations] not in unique_stations:
+                unique_stations.append(trainlines[lines][stations])
+                connection_dic[trainlines[lines][stations]] = []
+                # print(trainlines[lines][stations])
+    for linesx in trainlines:
+        for x in range(len(trainlines[linesx])):
+            for linesy in trainlines:
+                for y in range(len(trainlines[linesy])):
+                    if trainlines[linesx][x] == trainlines[linesy][y]:  # If the train stations are the same
+                        if trainlines[linesx] == trainlines[linesy]:
+                            break
+                        elif trainlines[linesx] != trainlines[linesy]:    # But the lines are not the same.
+                            # The below could be summarised into 3 lines...
+                            if trainlines[linesx][x] not in connection_dic[trainlines[linesx][x]]:  # if train station is not in dictionary keys list.
+                                connection_dic[trainlines[linesx][x]].append(linesx)  # put this line_x into the dictionary station key
+                                connection_dic[trainlines[linesx][x]].append(linesy)  # put this line_y into the dictionary station key
+                            if trainlines[linesx][x] in connection_dic[trainlines[linesx][x]]:
+                                if linesx not in connection_dic[trainlines[linesx][x]]:
+                                    connection_dic[trainlines[linesx][x]].append(linesx)
+                                if linesy not in connection_dic[trainlines[linesx][x]]:
+                                    connection_dic[trainlines[linesx][x]].append(linesy)
+    print(connection_dic)
+
+
+update_connections()
+exit(0)
+
 
 def search(station):
+    global found
     search.confirmed = False
     selected_stations = []
     for lines in trainlines:
         for x in range(len(trainlines[lines])):
+            if trainlines[lines][x] == station.title():
+                found = True
+                search.confirmed = True
+                return search.confirmed
+
             if trainlines[lines][x][:2] == station[:2]:
                 if trainlines[lines][x] not in selected_stations:
-                    selected_stations.append(trainlines[lines][x])
-    if len(selected_stations) != 1:
+                        selected_stations.append(trainlines[lines][x])
+    if len(selected_stations) > 1:
         print('Did you mean anyone of these?? ')
         for x in selected_stations:
             print(f'--> {x}')
-    else:
         search.confirmed = True
+        return search.confirmed
+
+    else:
+        print("Please make sure you type an train station with some accuracy. ")
+        search.confirmed = False
+        return search.confirmed
 
 
 def linefinder(s_train, d_train):
-    s_line, d_line = (None, None)
+    common_line = []
+    s_line, d_line = ([], [])
     for lines in trainlines:
         for x in range(len(trainlines[lines])):
             if s_train in trainlines[lines][x]:
-                s_line = lines
+                s_line.append(lines)
             if d_train in trainlines[lines][x]:
-                d_line = lines
-    print(f'Source train is on {str(s_line)}, Destination train is on {str(d_line)}.')
+                d_line.append(lines)
+    print(f'Source Train is on {s_line}, Destination Train is on {d_line}.')
+    # print("Checking if stations have a line in common...")
+    for line in s_line:
+        if line in d_line:
+            if line not in common_line:
+                common_line.append(line)
+    for line in d_line:
+        if line in s_line:
+            if line not in common_line:
+                common_line.append(line)
+    if len(common_line) < 1:
+        print("No lines in common found.")
+    else:
+        print(f"Lines found in common include: {common_line}")
 
 
 while input != 'Exit':
+    search.confirmed = False
+    found = False
     print('Enter exit in any way to exit program...')
-    source_train = input('Search START train station:: ').title()
-    search(source_train)
-    source_train = input('Enter START train station:: ').title()
+    while not search.confirmed:
+        source_train = input('Search START train station:: ').title().strip()
+        search(source_train)
+    if not found:
+        source_train = input('Enter START train station:: ').title().strip()
     os.system('cls')
-    dest_train = input('Search END train station:: ').title()
-    search(dest_train)
-    dest_train = input('Enter END train station:: ').title()
+    found = False
+    search.confirmed = False
+    while not search.confirmed:
+        dest_train = input('Search END train station:: ').title().strip()
+        search(dest_train)
+    if not found:
+        dest_train = input('Enter END train station:: ').title().strip()
     os.system('cls')
     print(f'Finding directions from {source_train} --> {dest_train}...')
     linefinder(source_train, dest_train)
     sleep(1)
+
+# TBC
