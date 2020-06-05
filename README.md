@@ -3,7 +3,7 @@
 <strong>--> trainLondonRouteFinder <br></strong>
 Will find an appropriate route given a start and destination train station on London Tube Map...<br>
 The script is fitted with a search feature to look for stations.<br>
-Currently, the script is updated to support directions to and from:<br>
+Currently [5/06/2020], the script is updated to support directions to and from:<br>
 <ul>
   <li>Bakerloo Line</li>
   <li>Central Line</li>
