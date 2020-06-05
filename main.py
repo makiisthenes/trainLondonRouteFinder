@@ -119,8 +119,10 @@ def update_connections():
                         elif trainlines[linesx] != trainlines[linesy]:    # But the lines are not the same.
                             # The below could be summarised into 3 lines...
                             if trainlines[linesx][x] not in connection_dic[trainlines[linesx][x]]:  # if train station is not in dictionary keys list.
-                                connection_dic[trainlines[linesx][x]].append(linesx)  # put this line_x into the dictionary station key
-                                connection_dic[trainlines[linesx][x]].append(linesy)  # put this line_y into the dictionary station key
+                                if linesx not in connection_dic[trainlines[linesx][x]]:
+                                    connection_dic[trainlines[linesx][x]].append(linesx)  # put this line_x into the dictionary station key
+                                if linesy not in connection_dic[trainlines[linesx][x]]:
+                                    connection_dic[trainlines[linesx][x]].append(linesy)  # put this line_y into the dictionary station key
                             if trainlines[linesx][x] in connection_dic[trainlines[linesx][x]]:
                                 if linesx not in connection_dic[trainlines[linesx][x]]:
                                     connection_dic[trainlines[linesx][x]].append(linesx)
