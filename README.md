@@ -2,7 +2,7 @@
 <p align='center'>
 <img src='https://raw.githubusercontent.com/makiisthenes/trainLondonRouteFinder/master/tfl_logo.jpg' width=40%>
 </p>
-<strong>--> trainLondonRouteFinder <br></strong>
+<strong>--> trainLondonRouteFinder [Rudimentary]  <br></strong>
 Will find an appropriate route given a start and destination train station on London Tube Map...<br>
 The script is fitted with a search feature to look for stations.<br>
 Currently [5/06/2020], the script is updated to support directions to and from:<br>
